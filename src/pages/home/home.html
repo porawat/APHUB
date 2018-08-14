@@ -8,32 +8,47 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>APHUB APARTMENT</h3>
-
+  <!-- <h3 style="text-align: center">APHUB APARTMENT</h3> -->
+<!-- 
   <ul>
     <li *ngFor="let item of items | async">
-      {{ item.email }}
+        {{ item.Mobile }} {{ item.Email }}
     </li>
-  </ul>
+  </ul> -->
 
   <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
 
-  <h3>Sign In to IonFire Chat</h3>
+  <h3 style="text-align: center">ลงทะเบียนผู้ใช้</h3>
 
   <div id="signInForm">
     <ion-list>
-<form (submit)="loginUser()">
+<form [formGroup]="todo" (ngSubmit)="loginUser()">
+    <ion-item>
+        <ion-label floating>Mobile</ion-label>
+        <ion-input type="number" [(ngModel)]="loginForm.Mobile" name="Mobile" formControlName="Mobile"></ion-input>
+      </ion-item>
       <ion-item>
         <ion-label floating>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="loginForm.email" name="email" required></ion-input>
+        <ion-input type="email" [(ngModel)]="loginForm.Email" name="Email" formControlName="Email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Display Name</ion-label>
-        <ion-input type="text" [(ngModel)]="loginForm.name" name="name"></ion-input>
+        <ion-input type="text" [(ngModel)]="loginForm.DisplayName" name="DisplayName" formControlName="DisplayName"></ion-input>
       </ion-item>
-
       <ion-item>
-        <button ion-button large block type="submit">Sign In</button>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="text" [(ngModel)]="loginForm.Password" name="Password" formControlName="Password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Retry Password</ion-label>
+            <ion-input type="text" [(ngModel)]="loginForm.rePassword" name="rePassword" formControlName="RePassword"></ion-input>
+          </ion-item> 
+          <ion-item>
+              <ion-label>หาห้องพัก</ion-label>
+              <ion-toggle value="true" checked="true" [(ngModel)]="loginForm.Type" name="Type" formControlName="Type"></ion-toggle>
+            </ion-item>
+      <ion-item>
+        <button ion-button large block type="submit" [disabled]="!todo.valid">ลงทะเบียน</button>
       </ion-item>
     </form>
     </ion-list>

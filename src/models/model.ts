@@ -1,5 +1,10 @@
 export interface User {
-    email: string;
+    Email: string;
+    Mobile: string;
+    DisplayName: string;
+    Password: string;
+    rePassword:string;
+    Type:boolean;
   }
   
   export interface Chat {
