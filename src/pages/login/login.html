@@ -25,11 +25,11 @@
 <form [formGroup]="todo" (ngSubmit)="loginUser()">
     <ion-item>
         <ion-label floating>Mobile/Email</ion-label>
-        <ion-input type="text" [(ngModel)]="loginForm.Mobile" name="Mobile" formControlName="Mobile"></ion-input>
+        <ion-input type="text" [(ngModel)]="loginForm.Mobile" name="Mobile" formControlName="Mobile" class="Mobile"></ion-input>
       </ion-item>     
       <ion-item>
           <ion-label floating>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="loginForm.Password" name="Password" formControlName="Password"></ion-input>
+          <ion-input type="password" [(ngModel)]="loginForm.Password" name="Password" formControlName="Password" class="Password"></ion-input>
         </ion-item>        
       <ion-item>
         <button ion-button large block type="submit" [disabled]="!todo.valid">ลงชื่อใช้งาน</button>
