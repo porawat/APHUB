@@ -14,6 +14,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { Firebase_Config } from './app.firebase';
 import { FireserviceProvider } from '../providers/fireservice/fireservice';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Facebook } from '@ionic-native/facebook'
 @NgModule({
   declarations: [
     MyApp,
@@ -27,6 +29,7 @@ import { FireserviceProvider } from '../providers/fireservice/fireservice';
     IonicStorageModule.forRoot({name: "__ion_APHUB"}), //ฐานข้อมูลในเครื่อง
     AngularFireModule.initializeApp(Firebase_Config.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +42,8 @@ import { FireserviceProvider } from '../providers/fireservice/fireservice';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    FireserviceProvider
+    FireserviceProvider,
+    Facebook 
   ]
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Storage } from "@ionic/storage";
 import { FireserviceProvider} from '../../providers/fireservice/fireservice';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {LoginPage} from '../login/login';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -33,9 +34,9 @@ export class HomePage {
   }
   ngOnInit() {
     this.storage.get("login").then(login => {
-      if (login && login.Email === "") {
+      if (login.Email === "") {
        // this.navCtrl.push(ChatsPage); ไปหาที่ต้องการ
-       this.navCtrl.setRoot(HomePage);
+       this.navCtrl.setRoot(LoginPage);
        console.log(login);
       }
     });

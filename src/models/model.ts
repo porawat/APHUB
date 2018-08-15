@@ -5,6 +5,7 @@ export interface User {
     Password: string;
     rePassword:string;
     Type:boolean;
+    photoURL:string;
   }
   
   export interface Chat {

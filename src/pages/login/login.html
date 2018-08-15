@@ -15,9 +15,9 @@
 
 <ion-content padding>
   <h3 style="text-align: center">ลงชื่อเข้าใช้</h3>
-  <br>
+ 
   <ion-card>
-      <br>
+     
     <img src="assets/imgs/logo.png" class="avatar"/>
     
   <div id="signInForm">
@@ -38,9 +38,8 @@
     </ion-list>
    
   </div>
-  <br><br>
-</ion-card>
-<ion-grid>
+  <br>
+  <ion-grid>
     <ion-row>
       <ion-col (click)="newuser()" style="cursor: pointer;color: rgb(35, 35, 145);text-align: right">
           ลงทะเบียนใช้งาน
@@ -51,4 +50,7 @@
     </ion-row>
     
   </ion-grid>
+  <button ion-button block color="danger" (click)="doGoogleLogin()">Google Login</button>
+</ion-card>
+
 </ion-content>
