@@ -19,29 +19,29 @@
   <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
 
   <h3 style="text-align: center">ลงทะเบียนผู้ใช้</h3>
-
+<img src="https://graph.facebook.com/2201926766515442/picture">
   <div id="signInForm">
     <ion-list>
 <form [formGroup]="todo" (ngSubmit)="loginUser()">
     <ion-item>
         <ion-label floating>Mobile</ion-label>
-        <ion-input type="number" [(ngModel)]="loginForm.Mobile" name="Mobile" formControlName="Mobile"></ion-input>
+        <ion-input type="number" [(ngModel)]="loginForm.phoneNumber" name="phoneNumber" formControlName="phoneNumber"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="loginForm.Email" name="Email" formControlName="Email"></ion-input>
+        <ion-input type="email" [(ngModel)]="loginForm.email" name="email" formControlName="email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Display Name</ion-label>
-        <ion-input type="text" [(ngModel)]="loginForm.DisplayName" name="DisplayName" formControlName="DisplayName"></ion-input>
+        <ion-input type="text" [(ngModel)]="loginForm.displayName" name="displayName" formControlName="displayName"></ion-input>
       </ion-item>
       <ion-item>
           <ion-label floating>Password</ion-label>
-          <ion-input type="text" [(ngModel)]="loginForm.Password" name="Password" formControlName="Password"></ion-input>
+          <ion-input type="text" [(ngModel)]="loginForm.password" name="password" formControlName="password"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Retry Password</ion-label>
-            <ion-input type="text" [(ngModel)]="loginForm.rePassword" name="rePassword" formControlName="RePassword"></ion-input>
+            <ion-input type="text" [(ngModel)]="loginForm.rePassword" name="rePassword" formControlName="rePassword"></ion-input>
           </ion-item> 
           <ion-item>
               <ion-label>หาห้องพัก</ion-label>

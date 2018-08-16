@@ -15,7 +15,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { Firebase_Config } from './app.firebase';
 import { FireserviceProvider } from '../providers/fireservice/fireservice';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { Facebook } from '@ionic-native/facebook'
+import { Facebook } from '@ionic-native/facebook';
 @NgModule({
   declarations: [
     MyApp,

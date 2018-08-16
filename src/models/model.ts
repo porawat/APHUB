@@ -1,11 +1,9 @@
 export interface User {
-    Email: string;
-    Mobile: string;
-    DisplayName: string;
-    Password: string;
-    rePassword:string;
-    Type:boolean;
-    photoURL:string;
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL: string;
+  phoneNumber:string;
   }
   
   export interface Chat {

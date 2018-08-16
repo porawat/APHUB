@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,LoadingController, Loading} from 'ionic-angular';
+import { IonicPage, NavController, Platform,NavParams ,LoadingController} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HomePage } from '../../pages/home/home';
 import { Storage } from "@ionic/storage";
@@ -10,6 +10,8 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import { Observable, of } from 'rxjs';
 import { switchMap} from 'rxjs/operators';
 import { User } from '../../models/model'
+import firebase from 'firebase';
+import { Facebook} from '@ionic-native/facebook';
 /**
  * Generated class for the LoginPage page.
  *
@@ -31,8 +33,11 @@ export class LoginPage {
     private storage: Storage,
     private loadingCtrl: LoadingController,
     public navParams: NavParams,
+    public platform: Platform,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore,) {
+    private afs: AngularFirestore,
+    private fb: Facebook) {
+      console.log(this.platform);
       this.todo = this.formBuilder.group({
         Mobile: ['', Validators.required],      
         Password: ['',Validators.required],     
@@ -84,22 +89,57 @@ export class LoginPage {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
 
     let data = {
-      Uid: user.uid,
-      Email: user.email,
-      DisplayName: user.displayName,
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
       photoURL: user.photoURL,
-      Phone:user.phoneNumber
+      phoneNumber:user.phoneNumber
     }
     console.log(user);
-    this.storage.set("login", data);
-    return userRef.set(data, { merge: true })
-
+    console.log(this.platform.is);
+    if (this.platform.is('core')) {
+      localStorage.setItem('user', JSON.stringify(data));
+    }else{
+      this.storage.set("user", data);
+    }
+    return userRef.set(data, { merge: true })    
   }
+  doFacebookLogin() : Promise<any>{
+    console.log('FB');
+/*
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+  .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+  .catch(e => console.log('Error logging into Facebook', e));
 
+*/
+//this.fb.logEvent(this.fb.EVENTS.);
+return this.fb.login(['public_profile','user_friends','email'])
+    .then( response => {
+      const facebookCredential = firebase.auth.FacebookAuthProvider
+        .credential(response.authResponse.accessToken);
+
+      firebase.auth().signInWithCredential(facebookCredential)
+        .then( user => { 
+          
+          let data = {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            phoneNumber:user.phoneNumber
+          }
+          this.updateUserData(data);
+          this.navCtrl.setRoot(HomePage);
+          console.log(data); 
+        });
+
+    }).catch((error) => { console.log(error) });
+  }
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
        // this.router.navigate(['/']);
     });
   }
+  
 }
