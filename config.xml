@@ -40,11 +40,6 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
-    <platform name="browser">
-        <preference name="SplashScreen" value="assets/imgs/main.png" />
-        <preference name="SplashScreenWidth" value="350" />
-        <preference name="SplashScreenHeight" value="350" />
-    </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -92,9 +87,6 @@
         <variable name="APP_NAME" value="gzon.network.aphub2u" />
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
     </plugin>
-    <allow-navigation href="http://192.168.229.249:8101" />
-    <allow-navigation href="http://192.168.229.249:8102" />
-    <allow-navigation href="http://192.168.229.249:8103" />
     <engine name="android" spec="7.0.0" />
     <engine name="browser" spec="5.0.4" />
 </widget>
