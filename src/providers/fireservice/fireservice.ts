@@ -6,15 +6,15 @@ import { Firebase_Config } from '../../app/app.firebase';
 export class FireserviceProvider {
 
   users: AngularFirestoreCollection<User>;
-  private userDoc: AngularFirestoreDocument<User>;
+ private userDoc: AngularFirestoreDocument<User>;
 
   chats: AngularFirestoreCollection<Chat>;
-  private chatDoc: AngularFirestoreDocument<Chat>;
+ private chatDoc: AngularFirestoreDocument<Chat>;
 
   constructor(private db: AngularFirestore) {
 
-    this.users = db.collection<User>(Firebase_Config.users_endpoint);
-    this.chats = db.collection<Chat>(Firebase_Config.chats_endpoint);
+    this.users = this.db.collection<User>(Firebase_Config.users_endpoint);
+    this.chats = this.db.collection<Chat>(Firebase_Config.chats_endpoint);
     console.log('Hello FireserviceProvider Provider');
   }
   addUser(payload) {

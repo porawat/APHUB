@@ -5,13 +5,15 @@ import { HomePage } from '../../pages/home/home';
 import { Storage } from "@ionic/storage";
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
+import AuthProvider = firebase.auth.AuthProvider;
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Observable, of } from 'rxjs';
 import { switchMap} from 'rxjs/operators';
 import { User } from '../../models/model'
-import firebase from 'firebase';
-import { Facebook} from '@ionic-native/facebook';
+import { FeedPage } from '../../pages/feed/feed';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -24,6 +26,7 @@ import { Facebook} from '@ionic-native/facebook';
   selector: 'page-login',
   templateUrl: 'login.html',
 })
+
 export class LoginPage {
   private todo : FormGroup;
   loginForm = {Mobile:'',Password:''};
@@ -34,9 +37,10 @@ export class LoginPage {
     private loadingCtrl: LoadingController,
     public navParams: NavParams,
     public platform: Platform,
+    public fb :Facebook,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private fb: Facebook) {
+    ) {
       console.log(this.platform);
       this.todo = this.formBuilder.group({
         Mobile: ['', Validators.required],      
@@ -64,25 +68,25 @@ export class LoginPage {
     this.loginForm = {Mobile:'',Password:''};
   }
   newuser(){
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.setRoot(FeedPage);
   }
   resetpass(){
 
   }
   doGoogleLogin() {
     const provider = new auth.GoogleAuthProvider()
-    return this.oAuthLogin(provider);
+
+    return this.oAuthLogin(provider); 
   }
 
-  private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
+  private oAuthLogin(provider) :Promise<any>{
+    
+      return this.afAuth.auth.signInWithRedirect(provider)
       .then((credential) => {
         this.updateUserData(credential.user)
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(FeedPage);
       })
   }
-
-
   private updateUserData(user) {
     // Sets user data to firestore on login
     
@@ -99,12 +103,51 @@ export class LoginPage {
     console.log(this.platform.is);
     if (this.platform.is('core')) {
       localStorage.setItem('user', JSON.stringify(data));
+      this.navCtrl.setRoot(FeedPage);
     }else{
       this.storage.set("user", data);
+      this.navCtrl.setRoot(FeedPage);
     }
     return userRef.set(data, { merge: true })    
   }
-  doFacebookLogin() : Promise<any>{
+  signInWithGoogle() : Promise<any>{
+		console.log('Sign in with google');
+		return this.oauthSignIn(new firebase.auth.GoogleAuthProvider());
+	}
+        private oauthSignIn(provider: AuthProvider) {
+		if (!(<any>window).cordova) {
+      return this.afAuth.auth.signInWithPopup(provider).then(result=>{
+
+        let token = result.credential.accessToken;
+					// The signed-in user info.
+					let user = result.user;
+          console.log(token, user);
+          this.updateUserData(user);
+      }).catch(function(error) {
+					// Handle Errors here.
+					alert(error.message);
+				});
+      
+		} else {
+			return this.afAuth.auth.signInWithRedirect(provider)
+			.then(() => {
+				return this.afAuth.auth.getRedirectResult().then( result => {
+					// This gives you a Google Access Token.
+					// You can use it to access the Google API.
+					let token = result.credential.accessToken;
+					// The signed-in user info.
+					let user = result.user;
+          console.log(token, user);
+          this.updateUserData(user);
+				}).catch(function(error) {
+					// Handle Errors here.
+					alert(error.message);
+				});
+			});
+		}
+  }
+ 
+  doFacebookLogin() {
     console.log('FB');
 /*
     this.fb.login(['public_profile', 'user_friends', 'email'])
@@ -113,27 +156,14 @@ export class LoginPage {
 
 */
 //this.fb.logEvent(this.fb.EVENTS.);
-return this.fb.login(['public_profile','user_friends','email'])
-    .then( response => {
-      const facebookCredential = firebase.auth.FacebookAuthProvider
-        .credential(response.authResponse.accessToken);
+//return this.fb.login(['public_profile','user_friends','email'])
+this.fb.login(['public_profile', 'user_friends', 'email'])
 
-      firebase.auth().signInWithCredential(facebookCredential)
-        .then( user => { 
-          
-          let data = {
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-            phoneNumber:user.phoneNumber
-          }
-          this.updateUserData(data);
-          this.navCtrl.setRoot(HomePage);
-          console.log(data); 
-        });
+.then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
 
-    }).catch((error) => { console.log(error) });
+.catch(e => console.log('Error logging into Facebook', e));
+
+//this.fb.logEvent(this.fb.EVENTS.EVENT_NAME_ADDED_TO_CART);
   }
 
   signOut() {

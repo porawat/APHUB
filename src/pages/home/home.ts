@@ -35,7 +35,7 @@ export class HomePage {
   }
   ngOnInit() {
 
-    let os = (this.platform.is('core')); 
+   // let os = (this.platform.is('core')); 
     if(this.platform.is('core')){
     var aValue = localStorage.getItem('user');
       console.log(aValue);
