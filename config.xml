@@ -3,7 +3,7 @@
     <name>APHUB</name>
     <description>GZON Network Apartment Service</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.229.117:8101" />
+    <content original-src="index.html"/>
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -102,8 +102,4 @@
         <variable name="APP_NAME" value="aphub" />
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
     </plugin>
-    <allow-navigation href="http://192.168.11.239:8100" />
-    <allow-navigation href="http://192.168.229.117:8101" />
-    <allow-navigation href="http://192.168.229.117:8102" />
-    <engine name="browser" spec="5.0.4" />
 </widget>
